@@ -23,7 +23,8 @@
  *	   distribution.
  */
 
-#include <sxe/api.hpp>
+#include <sxe/logging/api.hpp>
+#include <sxe/logging/stdtypedefs.hpp>
 
 namespace sxe { namespace logging {
 
@@ -31,8 +32,8 @@ namespace sxe { namespace logging {
      *
      * The default implementation simply works with a std::ostream. Like std::cout or std::clog.
      */
-    class SXE_PUBLIC LogSink
-        : public common::stdtypedefs<LogSink>
+    class SXELOG_PUBLIC LogSink
+        : public sxe::logging::stdtypedefs<LogSink>
     {
       public:
 
@@ -48,6 +49,7 @@ namespace sxe { namespace logging {
 
         virtual ~LogSink();
 
+#if SXELOG_CXX17
         /* Create a log sink from a filesystem path.
          *
          * @param name the base name of the log.
@@ -55,6 +57,7 @@ namespace sxe { namespace logging {
          * @param path the log file to create.
          */
         LogSink(const string_type& name, int level, const path_type& path);
+#endif
 
         /* Create a log sink from an existing ostream.
          *

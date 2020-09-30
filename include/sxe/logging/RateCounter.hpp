@@ -23,7 +23,7 @@
  *	   distribution.
  */
 
-#include <sxe/api.hpp>
+#include <sxe/logging/api.hpp>
 
 namespace sxe { namespace logging {
 
@@ -31,7 +31,7 @@ namespace sxe { namespace logging {
      *
      * Used for tasks like counting Frames Per Second or Ticks Per Second.
      */
-    class SXE_PUBLIC RateCounter
+    class SXELOG_PUBLIC RateCounter
     {
       public:
 

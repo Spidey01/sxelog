@@ -21,8 +21,8 @@
  *	   distribution.
  */
 
-#include "sxe/logging/LogSink.hpp"
-#include "sxe/logging/Log.hpp"
+#include <sxe/logging/LogSink.hpp>
+#include <sxe/logging/Log.hpp>
 
 namespace sxe {  namespace logging {
 
@@ -36,10 +36,12 @@ LogSink::~LogSink()
 }
 
 
+#if SXELOG_CXX17
 LogSink::LogSink(const string_type& name, int level, const path_type& path)
     : LogSink(name, level, new std::fstream(path.string(), std::ios::app), true)
 {
 }
+#endif
 
 
 LogSink::LogSink(const string_type& name, int level, std::ostream* stream, bool deleteMe)

@@ -23,7 +23,8 @@
  *	   distribution.
  */
 
-#include <sxe/api.hpp>
+#include <sxe/logging/api.hpp>
+#include <sxe/logging/stdtypedefs.hpp>
 #include <sxe/logging/LogSink.hpp>
 
 namespace sxe { namespace logging {
@@ -54,8 +55,8 @@ namespace sxe { namespace logging {
      *     - Calls the static methods with data filled in from ctor.
      *
      */
-    class SXE_PUBLIC Log
-        : public common::stdtypedefs<Log>
+    class SXELOG_PUBLIC Log
+        : public sxe::logging::stdtypedefs<Log>
     {
       public:
 

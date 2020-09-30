@@ -23,7 +23,8 @@
 
 #include "sxe/logging//RateCounter.hpp"
 
-#include <sxe/logging.hpp>
+#include <sxe/logging/Log.hpp>
+#include <sxe/logging/LogSink.hpp>
 
 using std::chrono::steady_clock;
 using std::chrono::seconds;
