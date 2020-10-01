@@ -47,11 +47,14 @@ endif(MSVC)
 
 target_include_directories(sxelog PUBLIC
 
-  # allow #include <sxe/logging/foo.hpp> for include/
-  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    # allow #include <sxe/logging/foo.hpp> for include/
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 
-  # api.hpp below.
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+    # api.hpp below.
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+
+    # for users via find_package()
+    $<INSTALL_INTERFACE:include>
 
 )
 
@@ -63,7 +66,12 @@ install(TARGETS sxelog
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/sxe"
-    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/sxe")
+    INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+    PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 
 install(FILES ${sxelog_export_hpp} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sxe/logging)
+
+install(EXPORT sxelogTargets
+        FILE sxelogTargets.cmake
+        NAMESPACE SxE::
+        DESTINATION lib/cmake/sxelog)

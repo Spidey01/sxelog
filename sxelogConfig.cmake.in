@@ -1,0 +1,20 @@
+# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
+# based on https://gitlab.kitware.com/cmake/community/-/wikis/doc/tutorials/How-to-create-a-ProjectConfig.cmake-file
+@PACKAGE_INIT@
+
+# - Config file for the sxelog package
+# It defines the following variables
+#  SXELOG_INCLUDE_DIRS - include directories for sxelog
+#  SXELOG_LIBRARIES    - libraries to link against
+
+# Compute paths
+get_filename_component(SXELOG_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(SXELOG_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET foo AND NOT sxelog_BINARY_DIR)
+  include("${SXELOG_CMAKE_DIR}/sxelogTargets.cmake")
+endif()
+
+# These are IMPORTED targets created by sxelogTargets.cmake
+set(SXELOG_LIBRARIES sxelog)

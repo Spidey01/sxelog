@@ -20,3 +20,21 @@ set(CPACK_GENERATOR "ZIP;TGZ;DEB")
 
 
 include(CPack)
+
+# Allow us to be find_package()'d.
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(sxelogConfig.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/sxelogConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sxelog
+)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sxelogConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sxelog)
+
+write_basic_package_version_file(
+    sxelogConfigVersion.cmake
+    VERSION ${PACKAGE_VERSION}
+    COMPATIBILITY SameMajorVersion
+    )
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sxelogConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sxelog)
