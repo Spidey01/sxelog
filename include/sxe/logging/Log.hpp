@@ -155,6 +155,21 @@ namespace sxe { namespace logging {
         /** Convenience method that sets the level of tag for every sink. */
         static void setLevel(const std::string& tag, int level);
 
+        /** Squelch log messages from a thread.
+         * 
+         * Only LogSinks currently added will be affected. There is no effect
+         * on newly created or added LogSinks after this call.
+         * 
+         * @param tid the thread id to be silenced.
+         */
+        static void squelchThreadId(std::thread::id tid);
+
+        /** Unsquelch log messages from a thread.
+         * 
+         * @param tid the thread id to be heard.
+         */
+        static void unsquelchThreadId(std::thread::id tid);
+
         /** Creates a log instance for tag.
          *
          * Use this if you want to do something like mLog.xtrace(msg, ex) instead of Log::xtrace(TAG, msg, ex).

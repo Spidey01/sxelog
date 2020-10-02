@@ -263,6 +263,26 @@ void Log::setLevel(const string& tag, int level)
 }
 
 
+void Log::squelchThreadId(std::thread::id tid)
+{
+    lock_guard synchronized(sMutex);
+
+    for (auto sink : sSinks) {
+        sink->squelchThreadId(tid);
+    }
+}
+
+
+void Log::unsquelchThreadId(std::thread::id tid)
+{
+    lock_guard synchronized(sMutex);
+
+    for (auto sink : sSinks) {
+        sink->unsquelchThreadId(tid);
+    }
+}
+
+
 Log::Log(const string& tag)
     : mTag(tag)
 {

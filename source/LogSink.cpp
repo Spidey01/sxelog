@@ -85,9 +85,16 @@ void LogSink::log(int level, const string_type& tag, const string_type& message)
 
 bool LogSink::isLoggable(const string_type& tag, int level) const
 {
+    if (!mSquelchedThreadIdList.empty()) {
+        auto maybe = std::find(mSquelchedThreadIdList.cbegin(),
+                               mSquelchedThreadIdList.cend(),
+                               std::this_thread::get_id());
+        if (maybe != mSquelchedThreadIdList.cend())
+            return false;
+    }
+
     return level == getLevel(tag);
 }
-
 
 int LogSink::getLevel(const string_type& tag) const
 {
@@ -154,6 +161,23 @@ bool LogSink::getDisplayTime() const
 void LogSink::setDisplayTime(bool x)
 {
     mDisplayTime = x;
+}
+
+
+void LogSink::squelchThreadId(std::thread::id tid)
+{
+    mSquelchedThreadIdList.push_back(tid);
+}
+
+
+void LogSink::unsquelchThreadId(std::thread::id tid)
+{
+    auto& l = mSquelchedThreadIdList;
+
+    if (l.empty())
+        return;
+    
+    l.erase(std::remove(l.begin(), l.end(), tid), l.end());
 }
 
 

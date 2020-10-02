@@ -117,6 +117,18 @@ namespace sxe { namespace logging {
         bool getDisplayTime() const;
         void setDisplayTime(bool x);
 
+        /** Squelch messages from thread.
+         * 
+         * @param tid the thread id.
+         */
+        void squelchThreadId(std::thread::id tid);
+
+        /** Unsquelch messages from thread.
+         * 
+         * @param tid the thread id.
+         */
+        void unsquelchThreadId(std::thread::id tid);
+
       protected:
 
         /** Default logging level for the sink. */
@@ -126,6 +138,12 @@ namespace sxe { namespace logging {
          */
         using Filters = std::map<string_type, int>;
         Filters mFilters;
+
+        using ThreadIdList = std::vector<std::thread::id>;
+
+        /* List of squelched thread IDs.
+         */
+        ThreadIdList mSquelchedThreadIdList;
 
         bool mDisplayThreadId;
         bool mDisplayDate;
