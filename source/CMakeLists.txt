@@ -9,6 +9,7 @@ option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 add_library(sxelog
     Log.cpp
     LogSink.cpp
+    LogSquelch.cpp
     RateCounter.cpp
 )
 
