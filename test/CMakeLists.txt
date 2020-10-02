@@ -1,6 +1,12 @@
 # vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
 CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
 
+# For all examples here.
+if(MSVC)
+    add_compile_options(/wd4251 /wd4275)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+endif(MSVC)
+
 # Surely there's a better way of doing this? set(somevar the thingy) doesn't
 # work, and I'd like to keep the namespace when installed.
 
@@ -27,8 +33,3 @@ else (BUILD_TESTS)
     target_link_libraries(file SxE::sxelog)
 
 endif (BUILD_TESTS)
-
-if(MSVC)
-    target_compile_options(stdout PRIVATE /wd4251 /wd4275)
-    target_compile_definitions(stdout PRIVATE _CRT_SECURE_NO_WARNINGS)
-endif(MSVC)
