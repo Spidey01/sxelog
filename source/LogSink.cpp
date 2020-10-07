@@ -189,6 +189,7 @@ LogSink::string_type LogSink::translate(int level) const
         case Log::WARN: return "w";
         case Log::INFO: return "i";
         case Log::DEBUG: return "d";
+        case Log::VERBOSE: return "v";
         case Log::TRACE: return "x";
         case Log::TEST: return "TEST";
 
