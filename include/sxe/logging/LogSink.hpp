@@ -47,34 +47,18 @@ namespace sxe { namespace logging {
         /** Default log name in ctors without a name param. */
         static const char* DEFAULT_LOG_NAME;
 
-        virtual ~LogSink();
-
-#if SXELOG_CXX17
-        /* Create a log sink from a filesystem path.
-         *
-         * @param name the base name of the log.
-         * @param level the default level.
-         * @param path the log file to create.
-         */
-        LogSink(const string_type& name, int level, const path_type& path);
-#endif
-
-        /* Create a log sink from an existing ostream.
-         *
-         * @param name the base name of the log.
-         * @param level the default level.
-         * @param stream the stream to write to.
-         * @param deleteMe if true: delete stream on dtor.
-         */
-        LogSink(const string_type& name, int level, std::ostream* stream, bool deleteMe);
-
-        /* LogSink(name, level, *stream, false);
-         */
-        LogSink(const string_type& name, int level, std::ostream& stream);
-
-        /** Uses std::clog and the default constants.
+        /** Uses default constants.
          */
         LogSink();
+
+        /* Create a base log sink.
+         *
+         * @param name the base name of the log sink itself.
+         * @param level the default level.
+         */
+        LogSink(const string_type& name, int level);
+
+        virtual ~LogSink();
 
         void log(int level, const string_type& tag, const string_type& message);
 
@@ -131,6 +115,52 @@ namespace sxe { namespace logging {
 
       protected:
 
+        /** Whether or not std::this_thread::get_id() should be included in onHeader().
+         */
+        bool mDisplayThreadId;
+
+        /** Whether or not the current date should be included in onHeader().
+         */
+        bool mDisplayDate;
+
+        /** Whether or not the current time should be included in onHeader().
+         */
+        bool mDisplayTime;
+
+        /** Translates log level to word for header().
+         * 
+         * Default implementation returns either a super short string like 'v'
+         * for VERBOSE level or 'xtrace' for TRACE level.
+         * 
+         * Unknown levels are mapped to "UNKNOWN".
+         */
+        virtual string_type translate(int level) const;
+
+        /** Writes the log header to the sink.
+         *
+         * Default implementation does nothing. Override this to prefix log
+         * messages with a header.
+         * 
+         * @param level the log level for incoming message.
+         * @param tag the logging tag for incoming message.
+         */
+        virtual void onHeader(int level, const string_type& tag);
+
+        /** Writes the log message to the sink.
+         * 
+         * Default implementation does nothing. Implement this to make the
+         * magic happen. E.g. write to a file, socket, database, etc.
+         * 
+         * @param message the log message to write.
+         */
+        virtual void onWrite(const string_type& message);
+
+      private:
+
+        /** Name of the log sink.
+         */
+        string_type mName;
+
         /** Default logging level for the sink. */
         int mDefaultLevel;
 
@@ -139,36 +169,13 @@ namespace sxe { namespace logging {
         using Filters = std::map<string_type, int>;
         Filters mFilters;
 
+
         using ThreadIdList = std::vector<std::thread::id>;
 
         /* List of squelched thread IDs.
          */
         ThreadIdList mSquelchedThreadIdList;
 
-        bool mDisplayThreadId;
-        bool mDisplayDate;
-        bool mDisplayTime;
-
-        /** Translates log level to word for header().
-         */
-        virtual string_type translate(int level) const;
-
-        /** Writes the log header to the stream.
-         *
-         * Default implementation is suitable for plain text logging formats.
-         *
-         *  - "{translate(Level)}/{tag}( tid={thread id}, date={date}, time={time} ): "
-         *
-         *  Where the various key=value are determined by the associated
-         *  methods, like getDisplayTime().
-         */
-        virtual void header(int level, const string_type& tag);
-
-      private:
-
-        string_type mName;
-        std::ostream* mOutput;
-        bool mDeleteMe;
     };
 
 } }

@@ -29,45 +29,25 @@ namespace sxe {  namespace logging {
 const int LogSink::DEFAULT_LOG_LEVEL = Log::INFO;
 const char* LogSink::DEFAULT_LOG_NAME = "debug";
 
-LogSink::~LogSink()
-{
-    if (mDeleteMe && mOutput != nullptr)
-        delete mOutput;
-}
 
-
-#if SXELOG_CXX17
-LogSink::LogSink(const string_type& name, int level, const path_type& path)
-    : LogSink(name, level, new std::fstream(path.string(), std::ios::app), true)
-{
-}
-#endif
-
-
-LogSink::LogSink(const string_type& name, int level, std::ostream* stream, bool deleteMe)
-    : mDefaultLevel(level)
+LogSink::LogSink(const string_type& name, int level)
+    : mName(name)
+    , mDefaultLevel(level)
     , mFilters()
     , mDisplayThreadId(true)
     , mDisplayDate(true)
     , mDisplayTime(true)
-    , mName(name)
-    , mOutput(stream)
-    , mDeleteMe(deleteMe)
 {
 }
-
-
-LogSink::LogSink(const string_type& name, int level, std::ostream& stream)
-    : LogSink(name, level, &stream, false)
-{
-}
-
 
 LogSink::LogSink()
-    : LogSink(DEFAULT_LOG_NAME, DEFAULT_LOG_LEVEL, std::clog)
+    : LogSink(DEFAULT_LOG_NAME, DEFAULT_LOG_LEVEL)
 {
 }
 
+LogSink::~LogSink()
+{
+}
 
 void LogSink::log(int level, const string_type& tag, const string_type& message)
 {
@@ -77,9 +57,8 @@ void LogSink::log(int level, const string_type& tag, const string_type& message)
     if (level > getLevel(tag))
         return;
 
-    header(level, tag);
-
-    *mOutput << message << std::endl;
+    onHeader(level, tag);
+    onWrite(message);
 }
 
 
@@ -193,47 +172,20 @@ LogSink::string_type LogSink::translate(int level) const
         case Log::TRACE: return "x";
         case Log::TEST: return "TEST";
 
-        default: return "WTF";
+        default: return "UNKNOWN";
     }
 }
 
 
-void LogSink::header(int level, const string_type& tag)
+void LogSink::onHeader(int level, const string_type& tag)
 {
-    *mOutput << translate(level) << '/' << tag;
-    *mOutput << '(';
+    (void)level;
+    (void)tag;
+}
 
-    bool prefixComma = false;
-
-    if (mDisplayThreadId) {
-        *mOutput << " tid=" << std::this_thread::get_id();
-        prefixComma = true;
-    }
-
-    auto t_now = std::time(nullptr);
-    std::tm now = *std::gmtime(&t_now);
-
-    if (mDisplayDate) {
-        if (prefixComma)
-            *mOutput << ',';
-        else
-            prefixComma = true;
-
-        static const char* format = "%Y-%m-%d";
-        *mOutput << " date=" << std::put_time(&now, format);
-    }
-
-    if (mDisplayTime) {
-        if (prefixComma)
-            *mOutput << ',';
-        else
-            prefixComma = true;
-
-        static const char* format = "%H:%M:%S";
-        *mOutput << " time=" << std::put_time(&now, format);
-    }
-
-    *mOutput << " ): ";
+void LogSink::onWrite(const string_type& message)
+{
+    (void)message;
 }
 
 

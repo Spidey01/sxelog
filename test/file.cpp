@@ -3,6 +3,7 @@
  */
 
 #include <sxe/logging/Log.hpp>
+#include <sxe/logging/TextLogSink.hpp>
 
 #include <iostream>
 #include <memory>
@@ -29,7 +30,7 @@ int main(int argc, char* argv[])
         message.append(argv[i]);
     }
 
-    auto sink = make_shared<sxe::logging::LogSink>(__FILE__, Log::TEST, new std::ofstream(file), true);
+    auto sink = make_shared<sxe::logging::TextLogSink>(__FILE__, Log::TEST, new std::ofstream(file), true);
     Log::add(sink);
 
     int levels[] = {

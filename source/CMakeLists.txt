@@ -11,6 +11,7 @@ add_library(sxelog
     LogSink.cpp
     LogSquelch.cpp
     RateCounter.cpp
+    TextLogSink.cpp
 )
 
 set(sxelog_export_hpp ${CMAKE_CURRENT_BINARY_DIR}/include/sxe/logging/sxelog_export.hpp)

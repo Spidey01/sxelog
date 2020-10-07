@@ -4,6 +4,7 @@
  */
 
 #include <sxe/logging/Log.hpp>
+#include <sxe/logging/TextLogSink.hpp>
 #include <sxe/logging/RateCounter.hpp>
 
 #include <chrono>
@@ -23,7 +24,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    Log::add(make_shared<sxe::logging::LogSink>(__FILE__, Log::TEST, &std::cout, false));
+    Log::add(make_shared<sxe::logging::TextLogSink>(__FILE__, Log::TEST, &std::cout, false));
 
     RateCounter rate("UpdatesPerSecond", true);
 
