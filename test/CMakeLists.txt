@@ -19,6 +19,9 @@ if (BUILD_TESTS)
     add_executable(file file.cpp)
     target_link_libraries(file sxelog)
 
+    add_executable(rate rate.cpp)
+    target_link_libraries(rate sxelog)
+
 else (BUILD_TESTS)
     message(DEBUG "Building standalone tests against installed sxelog")
     project(sxelog_tests
@@ -31,5 +34,8 @@ else (BUILD_TESTS)
 
     add_executable(file file.cpp)
     target_link_libraries(file SxE::sxelog)
+
+    add_executable(rate rate.cpp)
+    target_link_libraries(rate SxE::sxelog)
 
 endif (BUILD_TESTS)
