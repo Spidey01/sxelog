@@ -7,35 +7,25 @@ if(MSVC)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif(MSVC)
 
-# Surely there's a better way of doing this? set(somevar the thingy) doesn't
-# work, and I'd like to keep the namespace when installed.
-
 if (BUILD_TESTS)
     message(DEBUG "Building tests as part of sxelog")
 
-    add_executable(stdout stdout.cpp)
-    target_link_libraries(stdout sxelog)
-
-    add_executable(file file.cpp)
-    target_link_libraries(file sxelog)
-
-    add_executable(rate rate.cpp)
-    target_link_libraries(rate sxelog)
-
 else (BUILD_TESTS)
     message(DEBUG "Building standalone tests against installed sxelog")
+
     project(sxelog_tests
         LANGUAGES CXX)
 
     find_package(sxelog REQUIRED)
-
-    add_executable(stdout stdout.cpp)
-    target_link_libraries(stdout SxE::sxelog)
-
-    add_executable(file file.cpp)
-    target_link_libraries(file SxE::sxelog)
-
-    add_executable(rate rate.cpp)
-    target_link_libraries(rate SxE::sxelog)
+    add_library(sxelog ALIAS SxE::sxelog)
 
 endif (BUILD_TESTS)
+
+add_executable(stdout stdout.cpp)
+target_link_libraries(stdout sxelog)
+
+add_executable(file file.cpp)
+target_link_libraries(file sxelog)
+
+add_executable(rate rate.cpp)
+target_link_libraries(rate sxelog)
