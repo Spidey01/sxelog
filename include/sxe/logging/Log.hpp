@@ -43,7 +43,9 @@ namespace sxe { namespace logging {
      * So it is entirely possible to send log data to multiple sources and to
      * configure each source based on tag/level.
      *
-     * By default there are no log sinks, which causes all log data to be silenced.
+     * By default there are no log sinks, which causes all log data to be
+     * silenced until sinks are added. Use the autovivification() method if you
+     * want a sensible default created out of thin air.
      *
      * There are two ways to use Log:
      *
@@ -71,6 +73,19 @@ namespace sxe { namespace logging {
             TRACE   = 10,
             TEST    = 999,
         };
+
+        /** Enable or disable autovivification.
+         * 
+         * By default autovivification is disabled.
+         * 
+         * When enabled:
+         * 
+         * If no log sinks exist: a StandardOutputLogSink will be created with
+         * its default constructor and passed to setDefaultLogSink(). Thus
+         * creating a log sink on first use of the interface with the most
+         * universal defaults.
+         */
+        static void autovivification(bool enabled);
 
         /** Returns enum value as string.
          *
@@ -146,7 +161,23 @@ namespace sxe { namespace logging {
 
         static LogSinkList getSinks();
 
+        /** Get the specified LogSink.
+         * @param name which log sink you want.
+         * @returns the sink whose LogSink::name() matches.
+         */
         static LogSink::shared_ptr getLogSink(const std::string& name);
+
+        /** Returns the default log sink.
+         * 
+         * Quite imaginatively this is equal to getLogSink("default").
+         */
+        static LogSink::shared_ptr getDefaultLogSink();
+
+        /** Sets the default log sink.
+         * 
+         * Removes the default log sink. Sets sink's name to "default", and adds it.
+         */
+        static void setDefaultLogSink(LogSink::shared_ptr sink);
 
         /** Return if tag is loggable at level.
          */
@@ -220,6 +251,8 @@ namespace sxe { namespace logging {
         /* Used for synchronizing access to log sinks.
          */
         static lock_guard::mutex_type sMutex;
+
+        static bool sAutovivification;
 
         /** Instance tag.
          */

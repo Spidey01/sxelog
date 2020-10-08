@@ -21,7 +21,8 @@
  *	   distribution.
  */
 
-#include "sxe/logging/Log.hpp"
+#include <sxe/logging/Log.hpp>
+#include <sxe/logging/StandardOutputLogSink.hpp>
 
 using std::string;
 using std::exception;
@@ -32,6 +33,7 @@ using LogSinkListPrivate = std::list<LogSink::shared_ptr>;
 static LogSinkListPrivate sSinks;
 
 Log::lock_guard::mutex_type Log::sMutex;
+bool Log::sAutovivification = false;
 
 static const std::unordered_map<std::string, int> sStringToLevelTable = {
     { "ASSERT", Log::ASSERT },
@@ -44,6 +46,10 @@ static const std::unordered_map<std::string, int> sStringToLevelTable = {
     { "TEST", Log::TEST },
 };
 
+void Log::autovivification(bool enabled)
+{
+    sAutovivification = enabled;
+}
 
 std::string Log::levelToString(int level)
 {
@@ -183,6 +189,10 @@ void Log::log(int level, const string& tag, const string& message)
 {
     lock_guard synchronized(sMutex);
 
+    if (sAutovivification && sSinks.empty()) {
+        setDefaultLogSink(std::make_shared<StandardOutputLogSink>());
+    }
+
     for (auto sink : sSinks) {
         sink->log(level, tag, message);
     }
@@ -236,6 +246,27 @@ LogSink::shared_ptr Log::getLogSink(const string& name)
     }
 
     return nullptr;
+}
+
+
+LogSink::shared_ptr Log::getDefaultLogSink()
+{
+    return getLogSink("default");
+}
+
+
+void Log::setDefaultLogSink(LogSink::shared_ptr sink)
+{
+    lock_guard synchronized(sMutex);
+
+    LogSink::shared_ptr old = getDefaultLogSink();
+
+    if (old)
+        remove(old);
+
+    sink->setName("default");
+
+    add(sink);
 }
 
 
