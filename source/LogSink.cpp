@@ -107,6 +107,12 @@ const LogSink::string_type& LogSink::getName() const
 }
 
 
+void LogSink::setName(const string_type& name)
+{
+    mName = name;
+}
+
+
 bool LogSink::getDisplayThreadId() const
 {
     return mDisplayThreadId;

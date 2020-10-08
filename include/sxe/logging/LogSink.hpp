@@ -92,6 +92,12 @@ namespace sxe { namespace logging {
          */
         const string_type& getName() const;
 
+        /** Rename the log sink.
+         * 
+         * Default implementation changes the value returned by getName().
+         */
+        virtual void setName(const string_type& name);
+
         bool getDisplayThreadId() const;
         void setDisplayThreadId(bool x);
 
