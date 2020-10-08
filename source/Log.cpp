@@ -34,6 +34,7 @@ static LogSinkListPrivate sSinks;
 
 Log::lock_guard::mutex_type Log::sMutex;
 bool Log::sAutovivification = false;
+bool Log::sWtfCallsTerminate = false;
 
 static const std::unordered_map<std::string, int> sStringToLevelTable = {
     { "ASSERT", Log::ASSERT },
@@ -49,6 +50,11 @@ static const std::unordered_map<std::string, int> sStringToLevelTable = {
 void Log::autovivification(bool enabled)
 {
     sAutovivification = enabled;
+}
+
+void Log::wtfCallsTerminate(bool enabled)
+{
+    sWtfCallsTerminate = false;
 }
 
 std::string Log::levelToString(int level)
@@ -89,15 +95,23 @@ int Log::stringToLevel(const std::string& level)
 void Log::wtf(const string& tag, const string& message)
 {
     log(ASSERT, tag, message);
+
     static const char* msg = "What a Terrible Failure Report we has here";
     assert(msg == nullptr);
+
+    if (sWtfCallsTerminate)
+        std::terminate();
 }
 
 void Log::wtf(const string& tag, const string& message, const exception& error)
 {
     log(ASSERT, tag, message, error);
+
     static const char* msg = "What a Terrible Failure Report we has here";
     assert(msg == nullptr);
+
+    if (sWtfCallsTerminate)
+        std::terminate();
 }
 
 

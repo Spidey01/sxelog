@@ -87,6 +87,14 @@ namespace sxe { namespace logging {
          */
         static void autovivification(bool enabled);
 
+        /** Controls terrible failure handling.
+         * 
+         * By default this is disabled.
+         * 
+         * @see wtf().
+         */
+        static void wtfCallsTerminate(bool enabled);
+
         /** Returns enum value as string.
          *
          * Unknown values are mapped to "".
@@ -109,6 +117,13 @@ namespace sxe { namespace logging {
          * be triggered if assertions are enabled.  Android and the assertion
          * method calls this "What a Terrible Failure" but you may call it by other
          * names if you wish ;).
+         * 
+         * When NDEBUG is defined this simply logs unless wtfCallsTerminate()
+         * has been enabled.
+         * 
+         * When wtfCallsTerminate() has been enabled: std::terminate() will be
+         * called after assert(). Use this if you want wtf() to force the
+         * program to abort even when NDEBUG has been defined.
          */
         static void wtf(const std::string& tag, const std::string& message);
         static void wtf(const std::string& tag, const std::string& message, const std::exception& error);
@@ -253,6 +268,8 @@ namespace sxe { namespace logging {
         static lock_guard::mutex_type sMutex;
 
         static bool sAutovivification;
+
+        static bool sWtfCallsTerminate;
 
         /** Instance tag.
          */
