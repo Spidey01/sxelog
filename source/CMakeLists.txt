@@ -50,7 +50,7 @@ endif(MSVC)
 target_include_directories(sxelog PUBLIC
 
     # allow #include <sxe/logging/foo.hpp> for include/
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
 
     # api.hpp below.
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
