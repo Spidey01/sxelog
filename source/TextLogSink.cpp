@@ -21,6 +21,7 @@
  *	   distribution.
  */
 
+
 #include <sxe/logging/TextLogSink.hpp>
 
 namespace sxe { namespace logging {
@@ -74,7 +75,15 @@ void TextLogSink::onHeader(int level, const string_type& tag)
     }
 
     auto t_now = std::time(nullptr);
-    std::tm now = *std::gmtime(&t_now);
+    std::tm now;
+
+#if defined(_MSC_VER)
+    gmtime_s(&now, &t_now);
+#elif defined(__unix__)
+    gmtime_r(&t_now, &now);
+#else
+    now = *std::gmtime(&t_now);
+#endif
 
     if (getDisplayDate()) {
         if (prefixComma)

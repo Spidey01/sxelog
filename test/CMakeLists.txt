@@ -1,11 +1,6 @@
 # vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
 CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
 
-# For all examples here.
-if(MSVC)
-    add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
-endif(MSVC)
-
 if (BUILD_TESTS)
     message(DEBUG "Building tests as part of sxelog")
 

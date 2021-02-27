@@ -43,10 +43,6 @@ endif()
 cmake_policy(SET CMP0063 NEW)
 set_property(TARGET sxelog PROPERTY CXX_VISIBILITY_PRESET hidden)
 
-if(MSVC)
-    target_compile_definitions(sxelog PRIVATE _CRT_SECURE_NO_WARNINGS)
-endif(MSVC)
-
 target_include_directories(sxelog PUBLIC
 
     # allow #include <sxe/logging/foo.hpp> for include/
