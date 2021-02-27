@@ -25,6 +25,7 @@
 
 /* Standard headers required for logging. */
 
+#include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <ctime>
@@ -36,7 +37,9 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <thread>
 #include <unordered_map>
+#include <vector>
 
 /*
  * SxE has work arounds for detecting __cplusplus saying C++17 but no filesystem header exists.
