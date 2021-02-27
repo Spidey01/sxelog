@@ -29,3 +29,6 @@ target_link_libraries(customsink sxelog)
 
 add_executable(squelch squelch.cpp)
 target_link_libraries(squelch sxelog)
+
+add_executable(spam spam.cpp)
+target_link_libraries(spam sxelog)
