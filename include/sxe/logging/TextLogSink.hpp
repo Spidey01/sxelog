@@ -39,14 +39,14 @@ namespace sxe { namespace logging {
      * - PARAMS is a header based on config. E.g. include date, time, thread, ...
      * - MESSAGE is the log message.
      */
-    class SXELOG_PUBLIC TextLogSink
+    class TextLogSink
         : public LogSink
     {
       public:
 
         /** Uses std::clog and the default constants.
          */
-        TextLogSink();
+        SXELOG_EXPORT TextLogSink();
 
 #if SXELOG_CXX17
         /* Create a log sink from a filesystem path.
@@ -55,12 +55,12 @@ namespace sxe { namespace logging {
          * @param level the default level.
          * @param path the log file to create.
          */
-        TextLogSink(const string_type& name, int level, const path_type& path);
+        SXELOG_EXPORT TextLogSink(const string_type& name, int level, const path_type& path);
 #endif
 
         /* LogSink(name, level, *stream, false);
          */
-        TextLogSink(const string_type& name, int level, std::ostream& stream);
+        SXELOG_EXPORT TextLogSink(const string_type& name, int level, std::ostream& stream);
 
         /* Create a log sink from an existing ostream.
          *
@@ -69,15 +69,15 @@ namespace sxe { namespace logging {
          * @param stream the stream to write to.
          * @param deleteMe if true: delete stream on dtor.
          */
-        TextLogSink(const string_type& name, int level, std::ostream* stream, bool deleteMe);
+        SXELOG_EXPORT TextLogSink(const string_type& name, int level, std::ostream* stream, bool deleteMe);
 
-        virtual ~TextLogSink();
+        SXELOG_EXPORT virtual ~TextLogSink();
 
       protected:
 
         /** Returns a reference to the output stream.
          */
-        std::ostream& stream();
+        SXELOG_EXPORT std::ostream& stream();
 
         /** Writes the log header to the stream.
          *
@@ -88,9 +88,9 @@ namespace sxe { namespace logging {
          *  Where the various key=value are determined by the associated
          *  methods, like getDisplayTime().
          */
-        virtual void onHeader(int level, const string_type& tag) override;
+        SXELOG_EXPORT virtual void onHeader(int level, const string_type& tag) override;
 
-        virtual void onWrite(const string_type& message) override;
+        SXELOG_EXPORT virtual void onWrite(const string_type& message) override;
 
       private:
 

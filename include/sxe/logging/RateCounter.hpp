@@ -31,7 +31,7 @@ namespace sxe { namespace logging {
      *
      * Used for tasks like counting Frames Per Second or Ticks Per Second.
      */
-    class SXELOG_PUBLIC RateCounter
+    class RateCounter
     {
       public:
 
@@ -40,25 +40,25 @@ namespace sxe { namespace logging {
          * @param name used in logging this counter.
          * @param debug should we long the count.
          */
-        RateCounter(const std::string& name, bool debug);
+        SXELOG_EXPORT RateCounter(const std::string& name, bool debug);
 
-        RateCounter(const std::string& name);
+        SXELOG_EXPORT RateCounter(const std::string& name);
 
         /** Returns the name of this counter.
          */
-        std::string getName() const;
+        SXELOG_EXPORT std::string getName() const;
 
-        void disableDebugging();
-        void enableDebugging();
-        bool isDebuggingEnabled();
+        SXELOG_EXPORT void disableDebugging();
+        SXELOG_EXPORT void enableDebugging();
+        SXELOG_EXPORT bool isDebuggingEnabled();
 
         /** Update the counter.
          */
-        void update();
+        SXELOG_EXPORT void update();
 
       private:
 
-        static const std::string TAG;
+        SXELOG_EXPORT static const std::string TAG;
 
         std::string mName;
         bool mDebuggingEnabled;

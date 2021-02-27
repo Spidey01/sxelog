@@ -31,21 +31,21 @@ namespace sxe { namespace logging {
 
     /** A TextLogSink that uses std::cout.
      */
-    class SXELOG_PUBLIC StandardOutputLogSink
+    class StandardOutputLogSink
         : public TextLogSink
     {
       public:
-        StandardOutputLogSink()
+        SXELOG_EXPORT StandardOutputLogSink()
             : StandardOutputLogSink(DEFAULT_LOG_NAME, DEFAULT_LOG_LEVEL)
         {
         }
 
-        StandardOutputLogSink(const string_type& name, int level)
+        SXELOG_EXPORT StandardOutputLogSink(const string_type& name, int level)
             : TextLogSink(name, level, std::cout)
         {
         }
 
-        ~StandardOutputLogSink() = default;
+        SXELOG_EXPORT ~StandardOutputLogSink() = default;
     };
 
 } }

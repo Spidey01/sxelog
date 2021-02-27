@@ -14,11 +14,12 @@ add_library(sxelog
     TextLogSink.cpp
 )
 
+# Generates a header with SXELOG_EXPORT for the usual dllimport/export usage
+# based on sxelog_EXPORTS.
+#
 set(sxelog_export_hpp ${CMAKE_CURRENT_BINARY_DIR}/include/sxe/logging/sxelog_export.hpp)
 generate_export_header(sxelog
-    EXPORT_FILE_NAME ${sxelog_export_hpp}
-    EXPORT_MACRO_NAME SXELOG_PUBLIC
-    NO_EXPORT_MACRO_NAME SXELOG_PRIVATE)
+    EXPORT_FILE_NAME ${sxelog_export_hpp})
 
 # Make sure -std= is set.
 # - cmake 3.7 limited this to 14.
@@ -43,7 +44,6 @@ cmake_policy(SET CMP0063 NEW)
 set_property(TARGET sxelog PROPERTY CXX_VISIBILITY_PRESET hidden)
 
 if(MSVC)
-    target_compile_options(sxelog PRIVATE /wd4251 /wd4275)
     target_compile_definitions(sxelog PRIVATE _CRT_SECURE_NO_WARNINGS)
 endif(MSVC)
 

@@ -32,7 +32,7 @@ namespace sxe { namespace logging {
      * This creates logging filters that ignore log messages. On destruction
      * the filters will be cleared.
      */
-    class SXELOG_PUBLIC LogSquelch
+    class LogSquelch
     {
       public:
         /** Squelch all logging for thread id.
@@ -42,11 +42,11 @@ namespace sxe { namespace logging {
          * @param tag used to log why.
          * @param why included in log message about squelch/unsquelch.
          */
-        LogSquelch(std::thread::id tid, int level, const std::string& tag, const std::string& why);
+        SXELOG_EXPORT LogSquelch(std::thread::id tid, int level, const std::string& tag, const std::string& why);
 
         /** Unsquelches the logging.
          */
-        ~LogSquelch();
+        SXELOG_EXPORT ~LogSquelch();
 
       private:
         std::thread::id mThreadId;

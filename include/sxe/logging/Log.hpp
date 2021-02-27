@@ -57,7 +57,7 @@ namespace sxe { namespace logging {
      *     - Calls the static methods with data filled in from ctor.
      *
      */
-    class SXELOG_PUBLIC Log
+    class Log
         : public sxe::logging::stdtypedefs<Log>
     {
       public:
@@ -85,7 +85,7 @@ namespace sxe { namespace logging {
          * creating a log sink on first use of the interface with the most
          * universal defaults.
          */
-        static void autovivification(bool enabled);
+        SXELOG_EXPORT static void autovivification(bool enabled);
 
         /** Controls terrible failure handling.
          * 
@@ -93,13 +93,13 @@ namespace sxe { namespace logging {
          * 
          * @see wtf().
          */
-        static void wtfCallsTerminate(bool enabled);
+        SXELOG_EXPORT static void wtfCallsTerminate(bool enabled);
 
         /** Returns enum value as string.
          *
          * Unknown values are mapped to "".
          */
-        static std::string levelToString(int level);
+        SXELOG_EXPORT static std::string levelToString(int level);
 
         /** Returns enum value for string.
          *
@@ -109,7 +109,7 @@ namespace sxe { namespace logging {
          *
          * Unknown values are mapped to Log::ASSERT.
          */
-        static int stringToLevel(const std::string& level);
+        SXELOG_EXPORT static int stringToLevel(const std::string& level);
 
         /** Send an ASSERT message.
          *
@@ -125,81 +125,81 @@ namespace sxe { namespace logging {
          * called after assert(). Use this if you want wtf() to force the
          * program to abort even when NDEBUG has been defined.
          */
-        static void wtf(const std::string& tag, const std::string& message);
-        static void wtf(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void wtf(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void wtf(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an ERROR message. */
-        static void e(const std::string& tag, const std::string& message);
-        static void e(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void e(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void e(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an WARN message. */
-        static void w(const std::string& tag, const std::string& message);
-        static void w(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void w(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void w(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an INFO message. */
-        static void i(const std::string& tag, const std::string& message);
-        static void i(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void i(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void i(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an DEBUG message. */
-        static void d(const std::string& tag, const std::string& message);
-        static void d(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void d(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void d(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an VERBOSE message. */
-        static void v(const std::string& tag, const std::string& message);
-        static void v(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void v(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void v(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an TRACE message. */
-        static void xtrace(const std::string& tag, const std::string& message);
-        static void xtrace(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void xtrace(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void xtrace(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send an TEST message. */
-        static void test(const std::string& tag, const std::string& message);
-        static void test(const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void test(const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void test(const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Send a message to all sinks.
         */
-        static void log(int level, const std::string& tag, const std::string& message);
+        SXELOG_EXPORT static void log(int level, const std::string& tag, const std::string& message);
 
         /** Adds exception to log message.
          */
-        static void log(int level, const std::string& tag, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT static void log(int level, const std::string& tag, const std::string& message, const std::exception& error);
 
         /** Add log sink.
          */
-        static void add(LogSink::shared_ptr sink);
+        SXELOG_EXPORT static void add(LogSink::shared_ptr sink);
 
         /** Remove log sink.
          */
-        static void remove(LogSink::shared_ptr sink);
+        SXELOG_EXPORT static void remove(LogSink::shared_ptr sink);
 
         using LogSinkList = std::list<LogSink::weak_ptr>;
 
-        static LogSinkList getSinks();
+        SXELOG_EXPORT static LogSinkList getSinks();
 
         /** Get the specified LogSink.
          * @param name which log sink you want.
          * @returns the sink whose LogSink::name() matches.
          */
-        static LogSink::shared_ptr getLogSink(const std::string& name);
+        SXELOG_EXPORT static LogSink::shared_ptr getLogSink(const std::string& name);
 
         /** Returns the default log sink.
          * 
          * Quite imaginatively this is equal to getLogSink("default").
          */
-        static LogSink::shared_ptr getDefaultLogSink();
+        SXELOG_EXPORT static LogSink::shared_ptr getDefaultLogSink();
 
         /** Sets the default log sink.
          * 
          * Removes the default log sink. Sets sink's name to "default", and adds it.
          */
-        static void setDefaultLogSink(LogSink::shared_ptr sink);
+        SXELOG_EXPORT static void setDefaultLogSink(LogSink::shared_ptr sink);
 
         /** Return if tag is loggable at level.
          */
-        static bool isLoggable(const std::string& tag, int level);
+        SXELOG_EXPORT static bool isLoggable(const std::string& tag, int level);
 
         /** Convenience method that sets the level of tag for every sink. */
-        static void setLevel(const std::string& tag, int level);
+        SXELOG_EXPORT static void setLevel(const std::string& tag, int level);
 
         /** Squelch log messages from a thread.
          * 
@@ -208,13 +208,13 @@ namespace sxe { namespace logging {
          * 
          * @param tid the thread id to be silenced.
          */
-        static void squelchThreadId(std::thread::id tid);
+        SXELOG_EXPORT static void squelchThreadId(std::thread::id tid);
 
         /** Unsquelch log messages from a thread.
          * 
          * @param tid the thread id to be heard.
          */
-        static void unsquelchThreadId(std::thread::id tid);
+        SXELOG_EXPORT static void unsquelchThreadId(std::thread::id tid);
 
         /** Creates a log instance for tag.
          *
@@ -224,40 +224,40 @@ namespace sxe { namespace logging {
          *
          * You could also inherit this.
          */
-        Log(const std::string& tag);
+        SXELOG_EXPORT Log(const std::string& tag);
 
         /** Change the logging tag for this instance.
          *
          * @param tag sets mTag.
          */
-        void setInstanceTag(const std::string& tag);
+        SXELOG_EXPORT void setInstanceTag(const std::string& tag);
 
         /** Returns the tag for this instance.
          */
-        std::string getInstanceTag() const;
+        SXELOG_EXPORT std::string getInstanceTag() const;
 
         /** Calls the static version. */
-        void log(int level, const std::string& message);
+        SXELOG_EXPORT void log(int level, const std::string& message);
 
         /** Calls the static version. */
-        void log(int level, const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void log(int level, const std::string& message, const std::exception& error);
 
-        void wtf(const std::string& message);
-        void wtf(const std::string& message, const std::exception& error);
-        void e(const std::string& message);
-        void e(const std::string& message, const std::exception& error);
-        void w(const std::string& message);
-        void w(const std::string& message, const std::exception& error);
-        void i(const std::string& message);
-        void i(const std::string& message, const std::exception& error);
-        void d(const std::string& message);
-        void d(const std::string& message, const std::exception& error);
-        void v(const std::string& message);
-        void v(const std::string& message, const std::exception& error);
-        void xtrace(const std::string& message);
-        void xtrace(const std::string& message, const std::exception& error);
-        void test(const std::string& message);
-        void test(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void wtf(const std::string& message);
+        SXELOG_EXPORT void wtf(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void e(const std::string& message);
+        SXELOG_EXPORT void e(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void w(const std::string& message);
+        SXELOG_EXPORT void w(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void i(const std::string& message);
+        SXELOG_EXPORT void i(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void d(const std::string& message);
+        SXELOG_EXPORT void d(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void v(const std::string& message);
+        SXELOG_EXPORT void v(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void xtrace(const std::string& message);
+        SXELOG_EXPORT void xtrace(const std::string& message, const std::exception& error);
+        SXELOG_EXPORT void test(const std::string& message);
+        SXELOG_EXPORT void test(const std::string& message, const std::exception& error);
 
 
       private:
@@ -265,11 +265,11 @@ namespace sxe { namespace logging {
 
         /* Used for synchronizing access to log sinks.
          */
-        static lock_guard::mutex_type sMutex;
+        SXELOG_EXPORT static lock_guard::mutex_type sMutex;
 
-        static bool sAutovivification;
+        SXELOG_EXPORT static bool sAutovivification;
 
-        static bool sWtfCallsTerminate;
+        SXELOG_EXPORT static bool sWtfCallsTerminate;
 
         /** Instance tag.
          */

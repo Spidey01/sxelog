@@ -32,7 +32,7 @@ namespace sxe { namespace logging {
      *  - normal types for strings and paths.
      */
     template <class Derived>
-    class SXELOG_PUBLIC stdtypedefs
+    class SXELOG_EXPORT stdtypedefs
     {
       public:
 

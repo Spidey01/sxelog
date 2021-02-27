@@ -31,21 +31,21 @@ namespace sxe { namespace logging {
 
     /** A TextLogSink that uses std::cerr.
      */
-    class SXELOG_PUBLIC StandardErrorLogSink
+    class StandardErrorLogSink
         : public TextLogSink
     {
       public:
-        StandardErrorLogSink()
+        SXELOG_EXPORT StandardErrorLogSink()
             : StandardErrorLogSink(DEFAULT_LOG_NAME, DEFAULT_LOG_LEVEL)
         {
         }
 
-        StandardErrorLogSink(const string_type& name, int level)
+        SXELOG_EXPORT StandardErrorLogSink(const string_type& name, int level)
             : TextLogSink(name, level, std::cerr)
         {
         }
 
-        ~StandardErrorLogSink() = default;
+        SXELOG_EXPORT ~StandardErrorLogSink() = default;
     };
 
 } }

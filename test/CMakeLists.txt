@@ -3,7 +3,6 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
 
 # For all examples here.
 if(MSVC)
-    add_compile_options(/wd4251 /wd4275)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
 endif(MSVC)
 

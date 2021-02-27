@@ -32,88 +32,88 @@ namespace sxe { namespace logging {
      *
      * The default implementation simply works with a std::ostream. Like std::cout or std::clog.
      */
-    class SXELOG_PUBLIC LogSink
+    class LogSink
         : public sxe::logging::stdtypedefs<LogSink>
     {
       public:
 
         /** Default log level set in ctors without a level param. */
-        static const int DEFAULT_LOG_LEVEL;
+        SXELOG_EXPORT static const int DEFAULT_LOG_LEVEL;
 
         /** Default log name in ctors without a name param. */
-        static const char* DEFAULT_LOG_NAME;
+        SXELOG_EXPORT static const char* DEFAULT_LOG_NAME;
 
         /** Uses default constants.
          */
-        LogSink();
+        SXELOG_EXPORT LogSink();
 
         /* Create a base log sink.
          *
          * @param name the base name of the log sink itself.
          * @param level the default level.
          */
-        LogSink(const string_type& name, int level);
+        SXELOG_EXPORT LogSink(const string_type& name, int level);
 
-        virtual ~LogSink();
+        SXELOG_EXPORT virtual ~LogSink();
 
-        void log(int level, const string_type& tag, const string_type& message);
+        SXELOG_EXPORT void log(int level, const string_type& tag, const string_type& message);
 
         /** Test if tag loggable.
          *
          * @returns true if messages for tag/level would be written.
          */
-        bool isLoggable(const string_type& tag, int level) const;
+        SXELOG_EXPORT bool isLoggable(const string_type& tag, int level) const;
 
         /* Returns log level for tag.
          */
-        int getLevel(const string_type& tag) const;
+        SXELOG_EXPORT int getLevel(const string_type& tag) const;
 
         /* Sets log level for tag.
          */
-        void setLevel(const string_type& tag, int level);
+        SXELOG_EXPORT void setLevel(const string_type& tag, int level);
 
-        int getDefaultLevel() const;
+        SXELOG_EXPORT int getDefaultLevel() const;
 
         /** Sets the default log level.
          *
          * This is comparable to setting the level in the constructor but does not
          * modify any levels already set.
          */
-        void setDefaultLevel(int level);
+        SXELOG_EXPORT void setDefaultLevel(int level);
 
         /** Returns the name of the log.
          *
          * This doesn't mean filename or pathname, it's just the 'name' param
          * from the ctor.
          */
-        const string_type& getName() const;
+        SXELOG_EXPORT const string_type& getName() const;
 
         /** Rename the log sink.
          * 
          * Default implementation changes the value returned by getName().
          */
-        virtual void setName(const string_type& name);
+        SXELOG_EXPORT virtual void setName(const string_type& name);
 
-        bool getDisplayThreadId() const;
-        void setDisplayThreadId(bool x);
+        SXELOG_EXPORT bool getDisplayThreadId() const;
+        SXELOG_EXPORT void setDisplayThreadId(bool x);
 
-        bool getDisplayDate() const;
-        void setDisplayDate(bool x);
+        SXELOG_EXPORT bool getDisplayDate() const;
+        SXELOG_EXPORT void setDisplayDate(bool x);
 
-        bool getDisplayTime() const;
-        void setDisplayTime(bool x);
+        SXELOG_EXPORT bool getDisplayTime() const;
+        SXELOG_EXPORT void setDisplayTime(bool x);
 
         /** Squelch messages from thread.
          * 
          * @param tid the thread id.
          */
-        void squelchThreadId(std::thread::id tid);
+        SXELOG_EXPORT void squelchThreadId(std::thread::id tid);
 
         /** Unsquelch messages from thread.
          * 
          * @param tid the thread id.
          */
-        void unsquelchThreadId(std::thread::id tid);
+        SXELOG_EXPORT void unsquelchThreadId(std::thread::id tid);
 
       protected:
 
@@ -124,7 +124,7 @@ namespace sxe { namespace logging {
          * 
          * Unknown levels are mapped to "UNKNOWN".
          */
-        virtual string_type translate(int level) const;
+        SXELOG_EXPORT virtual string_type translate(int level) const;
 
         /** Writes the log header to the sink.
          *
@@ -134,7 +134,7 @@ namespace sxe { namespace logging {
          * @param level the log level for incoming message.
          * @param tag the logging tag for incoming message.
          */
-        virtual void onHeader(int level, const string_type& tag);
+        SXELOG_EXPORT virtual void onHeader(int level, const string_type& tag);
 
         /** Writes the log message to the sink.
          * 
@@ -143,7 +143,7 @@ namespace sxe { namespace logging {
          * 
          * @param message the log message to write.
          */
-        virtual void onWrite(const string_type& message);
+        SXELOG_EXPORT virtual void onWrite(const string_type& message);
 
       private:
 
