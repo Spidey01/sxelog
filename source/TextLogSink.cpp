@@ -68,7 +68,7 @@ void TextLogSink::onHeader(int level, const string_type& tag)
 
     bool prefixComma = false;
 
-    if (mDisplayThreadId) {
+    if (getDisplayThreadId()) {
         *mOutput << " tid=" << std::this_thread::get_id();
         prefixComma = true;
     }
@@ -76,7 +76,7 @@ void TextLogSink::onHeader(int level, const string_type& tag)
     auto t_now = std::time(nullptr);
     std::tm now = *std::gmtime(&t_now);
 
-    if (mDisplayDate) {
+    if (getDisplayDate()) {
         if (prefixComma)
             *mOutput << ',';
         else
@@ -86,7 +86,7 @@ void TextLogSink::onHeader(int level, const string_type& tag)
         *mOutput << " date=" << std::put_time(&now, format);
     }
 
-    if (mDisplayTime) {
+    if (getDisplayTime()) {
         if (prefixComma)
             *mOutput << ',';
         else

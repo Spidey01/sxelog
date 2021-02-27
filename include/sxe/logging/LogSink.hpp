@@ -121,18 +121,6 @@ namespace sxe { namespace logging {
 
       protected:
 
-        /** Whether or not std::this_thread::get_id() should be included in onHeader().
-         */
-        bool mDisplayThreadId;
-
-        /** Whether or not the current date should be included in onHeader().
-         */
-        bool mDisplayDate;
-
-        /** Whether or not the current time should be included in onHeader().
-         */
-        bool mDisplayTime;
-
         /** Translates log level to word for header().
          * 
          * Default implementation returns either a super short string like 'v'
@@ -181,6 +169,18 @@ namespace sxe { namespace logging {
         /* List of squelched thread IDs.
          */
         ThreadIdList mSquelchedThreadIdList;
+
+        /** Whether or not std::this_thread::get_id() should be included in onHeader().
+         */
+        bool mDisplayThreadId;
+
+        /** Whether or not the current date should be included in onHeader().
+         */
+        bool mDisplayDate;
+
+        /** Whether or not the current time should be included in onHeader().
+         */
+        bool mDisplayTime;
 
     };
 
