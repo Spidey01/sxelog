@@ -37,10 +37,6 @@ namespace sxe { namespace logging {
     {
       public:
 
-        using shared_ptr = std::shared_ptr<LogSink>;
-        using weak_ptr = std::weak_ptr<LogSink>;
-        using unique_ptr = std::unique_ptr<LogSink>;
-
         /** Default log level set in ctors without a level param. */
         static const int DEFAULT_LOG_LEVEL;
 
