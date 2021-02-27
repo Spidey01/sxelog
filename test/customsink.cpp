@@ -18,8 +18,13 @@ using sxe::logging::Log;
 class CustomSink : public sxe::logging::LogSink
 {
   public:
+    CustomSink(int level)
+        : LogSink(__FILE__, level)
+    {
+    }
+
     CustomSink()
-        : LogSink(__FILE__, Log::TEST)
+        : LogSink(__FILE__, LogSink::DEFAULT_LOG_LEVEL)
     {
     }
 
@@ -34,28 +39,32 @@ class CustomSink : public sxe::logging::LogSink
         cout << getName() << '\t' << translate(level) << '\t' << tag;
 
         if (getDisplayThreadId()) {
-            cout << endl << '\t' << "thread id " << std::this_thread::get_id();
+            cout << endl
+                 << '\t' << "thread id " << std::this_thread::get_id();
         }
 
         auto t_now = std::time(nullptr);
         std::tm now = *std::gmtime(&t_now);
 
         if (getDisplayDate()) {
-            cout << endl << '\t' << std::put_time(&now, "%Y-%m-%d");
+            cout << endl
+                 << '\t' << std::put_time(&now, "%Y-%m-%d");
         }
 
         if (getDisplayTime()) {
             if (getDisplayDate())
                 cout << 'T';
             else
-                cout << endl << '\t';
+                cout << endl
+                     << '\t';
             cout << std::put_time(&now, "%h:%M:%S");
         }
     }
 
     void onWrite(const string_type& message) override
     {
-        cout << endl << '\t' << '\t' << message << std::endl;
+        cout << endl
+             << '\t' << '\t' << message << std::endl;
     }
 };
 
@@ -76,7 +85,7 @@ int main(int argc, char* argv[])
         message.append(argv[i]);
     }
 
-    Log::add(make_shared<CustomSink>());
+    Log::add(make_shared<CustomSink>(Log::TEST));
 
     int levels[] = {
         Log::TEST,
