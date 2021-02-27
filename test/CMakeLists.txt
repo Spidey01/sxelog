@@ -26,3 +26,6 @@ target_link_libraries(rate sxelog)
 
 add_executable(customsink customsink.cpp)
 target_link_libraries(customsink sxelog)
+
+add_executable(squelch squelch.cpp)
+target_link_libraries(squelch sxelog)
