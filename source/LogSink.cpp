@@ -55,7 +55,7 @@ void LogSink::log(int level, const string_type& tag, const string_type& message)
     if (message.empty())
         return;
 
-    if (level > getLevel(tag))
+    if (!isLoggable(tag, level))
         return;
 
     onHeader(level, tag);
@@ -73,7 +73,7 @@ bool LogSink::isLoggable(const string_type& tag, int level) const
             return false;
     }
 
-    return level == getLevel(tag);
+    return level <= getLevel(tag);
 }
 
 int LogSink::getLevel(const string_type& tag) const
