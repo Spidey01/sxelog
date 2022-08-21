@@ -15,20 +15,12 @@ else (BUILD_TESTS)
 
 endif (BUILD_TESTS)
 
-add_executable(stdout stdout.cpp)
-target_link_libraries(stdout sxelog)
+# Tests need to compile with the same standard as sxelog.
+# For standalone mode you may need to -DCXX_STANDARD=14.
+get_property(sxelog_cxxstd TARGET sxelog PROPERTY CXX_STANDARD)
 
-add_executable(file file.cpp)
-target_link_libraries(file sxelog)
-
-add_executable(rate rate.cpp)
-target_link_libraries(rate sxelog)
-
-add_executable(customsink customsink.cpp)
-target_link_libraries(customsink sxelog)
-
-add_executable(squelch squelch.cpp)
-target_link_libraries(squelch sxelog)
-
-add_executable(spam spam.cpp)
-target_link_libraries(spam sxelog)
+foreach(testprog stdout file rate customsink squelch spam)
+    add_executable(${testprog} ${testprog}.cpp)
+    target_link_libraries(${testprog} sxelog)
+    set_property(TARGET ${testprog} PROPERTY CXX_STANDARD ${sxelog_cxxstd})
+endforeach(testprog)
