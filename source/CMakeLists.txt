@@ -14,6 +14,14 @@ add_library(sxelog
     TextLogSink.cpp
 )
 
+# Features used.
+target_compile_features(sxelog INTERFACE
+    cxx_nullptr
+    cxx_auto_type
+    cxx_override
+    cxx_range_for
+)
+
 # Generates a header with SXELOG_EXPORT for the usual dllimport/export usage
 # based on sxelog_EXPORTS.
 #
