@@ -49,7 +49,10 @@
  * To override __cplusplus: define SXELOG_NO_FILESYSTME_HEADER when building and using.
  */
 
-#define SXELOG_CXX17 ( __cplusplus > 201402L && !defined(SXELOG_NO_FILESYSTEM_HEADER) )
+#ifndef SXELOG_NO_FILESYSTEM_HEADER
+#define SXELOG_NO_FILESYSTEM_HEADER 0
+#endif
+#define SXELOG_CXX17 ( __cplusplus > 201402L && !SXELOG_NO_FILESYSTEM_HEADER )
 #if SXELOG_CXX17
 #include <filesystem>
 #endif
