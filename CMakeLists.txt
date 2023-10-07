@@ -1,9 +1,11 @@
-# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
-CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.13 FATAL_ERROR)
+cmake_policy(SET CMP0048 NEW)
 
 project(libsxelog
-    VERSION 2.0.0
-    LANGUAGES CXX)
+    VERSION 2.0.1
+    LANGUAGES CXX
+    DESCRIPTION "SxE's logging system adapted for use by other applications."
+    HOMEPAGE_URL "https://github.com/Spidey01/sxelog")
 
 add_subdirectory(include)
 add_subdirectory(source)
@@ -20,16 +22,17 @@ set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_CONTACT "Terry Poulin")
 set(CPACK_GENERATOR "ZIP;TGZ")
 find_program(HAVE_DEB dpkg)
 if (HAVE_DEB)
     list(APPEND CPACK_GENERATOR "DEB")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
 endif()
 find_program(HAVE_RPM rpmbuild)
 if (HAVE_RPM)
     list(APPEND CPACK_GENERATOR "RPM")
-set(CPACK_RPM_PACKAGE_DEPENDS "")
+    set(CPACK_RPM_PACKAGE_DEPENDS "")
 endif()
 include(CPack)
 
