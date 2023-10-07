@@ -49,10 +49,10 @@ endif()
 
 # honor visiblity even when building static libs.
 cmake_policy(SET CMP0063 NEW)
-set_property(TARGET sxelog PROPERTY CXX_VISIBILITY_PRESET hidden)
+# Commenting out because gcc/clang and msvc disagree on the result.
+# set_property(TARGET sxelog PROPERTY CXX_VISIBILITY_PRESET hidden)
 
 target_include_directories(sxelog PUBLIC
-
     # allow #include <sxe/logging/foo.hpp> for include/
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
 
@@ -61,7 +61,6 @@ target_include_directories(sxelog PUBLIC
 
     # for users via find_package()
     $<INSTALL_INTERFACE:include>
-
 )
 
 
