@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CPack generator for RPM now enabled if rpmbuild is found.
 - `CHANGELOG.md`, `.markdownlint.json`
 - `bootstrap.sh` and `bootstrap.cmd`.
+- BUILD_DOCS option
+  - Installs documentation files like a good package.
+  - Builds and installs doxygen if found.
 
 ### Changed
 

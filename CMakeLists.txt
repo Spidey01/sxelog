@@ -7,6 +7,7 @@ project(libsxelog
     DESCRIPTION "SxE's logging system adapted for use by other applications."
     HOMEPAGE_URL "https://github.com/Spidey01/sxelog")
 
+include(GNUInstallDirs)
 add_subdirectory(include)
 add_subdirectory(source)
 
@@ -14,8 +15,7 @@ option(BUILD_TESTS "Build test programs" ON)
 if (BUILD_TESTS)
     add_subdirectory(test)
 endif (BUILD_TESTS)
-
-
+option(BUILD_DOCS "Build documentation if Doxygen found" ON)
 
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
@@ -38,6 +38,24 @@ if (HAVE_RPM)
     set(CPACK_RPM_PACKAGE_RELEASE "1%{distro}")
     set(CPACK_RPM_PACKAGE_RELEASE_DIST ON)
 endif()
+find_package(Doxygen)
+    if (DOXYGEN_FOUND AND BUILD_DOCS)
+    set(DOXYGEN_PROJECT_BRIEF "${PROJECT_DESCRIPTION}")
+    set(DOXYGEN_PROJECT_NAME "SxE Log")
+    set(DOXYGEN_EXTRACT_ALL YES)
+    set(DOXYGEN_STRIP_FROM_INC_PATH ${PROJECT_SOURCE_DIR}/sxe/include)
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${PROJECT_SOURCE_DIR}/README.md")
+
+    doxygen_add_docs(docs
+        ${PROJECT_SOURCE_DIR}/include/
+        ${PROJECT_SOURCE_DIR}/CHANGELOG.md
+        ${PROJECT_SOURCE_DIR}/README.md
+        ALL)
+
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
+            DESTINATION ${CMAKE_INSTALL_DOCDIR})
+endif (DOXYGEN_FOUND AND BUILD_DOCS)
+
 include(CPack)
 
 # Allow us to be find_package()'d.
@@ -57,3 +75,9 @@ write_basic_package_version_file(
     )
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sxelogConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sxelog)
+
+install(FILES
+    CHANGELOG.md
+    COPYING
+    README.md
+    DESTINATION ${CMAKE_INSTALL_DOCDIR})
