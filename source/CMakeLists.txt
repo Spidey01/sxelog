@@ -1,5 +1,4 @@
-# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
-CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.13 FATAL_ERROR)
 
 # It's documentation sucks but it's more universal than SxE's own versions for this.
 include(GenerateExportHeader)

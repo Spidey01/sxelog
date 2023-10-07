@@ -1,5 +1,4 @@
-# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
-CMAKE_MINIMUM_REQUIRED(VERSION 3.7 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.13 FATAL_ERROR)
 
 if (BUILD_TESTS)
     message(DEBUG "Building tests as part of sxelog")

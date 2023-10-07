@@ -1,4 +1,3 @@
-# vim: set filetype=cmake tabstop=4 shiftwidth=4 expandtab :
 include(GNUInstallDirs)
 
 # This file just makes sure install and package related targets work.
