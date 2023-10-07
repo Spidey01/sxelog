@@ -26,10 +26,11 @@ if (HAVE_DEB)
     list(APPEND CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
 endif()
+find_program(HAVE_RPM rpmbuild)
+if (HAVE_RPM)
+    list(APPEND CPACK_GENERATOR "RPM")
 set(CPACK_RPM_PACKAGE_DEPENDS "")
-set(CPACK_GENERATOR "ZIP;TGZ;DEB")
-
-
+endif()
 include(CPack)
 
 # Allow us to be find_package()'d.
