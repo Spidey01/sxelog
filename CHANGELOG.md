@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - CPack generator for RPM now enabled if rpmbuild is found.
-- `CHANGELOG.md` and `.markdownlint.json``.
+- `CHANGELOG.md`, `.markdownlint.json`
+- `bootstrap.sh` and `bootstrap.cmd`.
 
 ### Changed
 
