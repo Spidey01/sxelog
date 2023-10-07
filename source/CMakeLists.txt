@@ -30,21 +30,19 @@ generate_export_header(sxelog
     EXPORT_FILE_NAME ${sxelog_export_hpp})
 
 # Make sure -std= is set.
-# - cmake 3.7 limited this to 14.
-# - cmake 3.8 limited this to 17.
-# - cmake 3.12 limited this to 20.
-
-message(STATUS "CXX_REQUIRED = 2014")
 set_property(TARGET sxelog PROPERTY CXX_REQUIRED 14)
 if(${CMAKE_VERSION} VERSION_LESS "3.8.0")
-    message(STATUS "CXX_STANDARD = 2014")
+    # - cmake 3.7 limited this to 14.
     set_property(TARGET sxelog PROPERTY CXX_STANDARD 14)
 elseif(${CMAKE_VERSION} VERSION_LESS "3.12.0")
-    message(STATUS "CXX_STANDARD = 2017")
+    # - cmake 3.8 limited this to 17.
     set_property(TARGET sxelog PROPERTY CXX_STANDARD 17)
-else()
-    message(STATUS "CXX_STANDARD = 2020")
+elseif(${CMAKE_VERSION} VERSION_LESS "3.20")
+    # - cmake 3.12 limited this to 20.
     set_property(TARGET sxelog PROPERTY CXX_STANDARD 20)
+else()
+    # - cmake 3.20 limited this to 23.
+    set_property(TARGET sxelog PROPERTY CXX_STANDARD 23)
 endif()
 
 # honor visiblity even when building static libs.
